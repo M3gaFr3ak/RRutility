@@ -1,6 +1,7 @@
 package rrutil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.command.ICommandManager;
@@ -24,6 +25,8 @@ public class RRUtility
 	public static RRUtility instance;
 
 	public String unlCommandName = "ULN";
+	public List<String> unlCommandAliases = Arrays.asList(new String[]
+	{ "uln" });
 	private Boolean enableIsUnlocalized = true;
 	private Boolean enableContainsUnlocalized = true;
 	private String[] removeIsUnlocalizedName = new String[0];
@@ -34,7 +37,8 @@ public class RRUtility
 	{
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
-		unlCommandName = config.get("Commands", "getUnlocalizedNameCommand", unlCommandName, "commandString to call the getUnlocalizedName command").getString();
+		unlCommandName = config.get("Commands", "getUnlocalizedNameCommand_name", unlCommandName, "commandString to call the getUnlocalizedName command").getString();
+		unlCommandAliases = Arrays.asList(config.get("Commands", "getUnlocalizedNameCommand_aliases", (String[]) unlCommandAliases.toArray(), "commandAliases for the getUnlocalizedName command").getStringList());
 		enableIsUnlocalized = config.get("Recipe Removal Toggles", "enable_is_unlocalized", enableIsUnlocalized, "Enable the option to remove the Items from the \"is_unlocalized\" list").getBoolean(enableIsUnlocalized);
 		enableContainsUnlocalized = config.get("Recipe Removal Toggles", "enable_contains_unlocalized", enableContainsUnlocalized, "Enable the option to remove the Items from the \"contains_unlocalized\" list").getBoolean(enableContainsUnlocalized);
 		removeIsUnlocalizedName = config.get("Recipe Removal", "is_unlocalized", removeIsUnlocalizedName, "Recipes to be removed, if the unlocalized name is the entry").getStringList();

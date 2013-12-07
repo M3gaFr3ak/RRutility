@@ -1,10 +1,13 @@
 package rrutil;
 
+import java.util.List;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatMessageComponent;
+import net.minecraft.util.EnumChatFormatting;
 
 public class CommandGetUnlocalizedName extends CommandBase
 {
@@ -21,6 +24,11 @@ public class CommandGetUnlocalizedName extends CommandBase
 		return "This command will tell you the unlocalized name of the item you are holding in your hand!";
 	}
 
+	public List getCommandAliases()
+	{
+		return RRUtility.instance.unlCommandAliases;
+	}
+
 	@Override
 	public void processCommand(ICommandSender icommandsender, String[] astring)
 	{
@@ -28,13 +36,12 @@ public class CommandGetUnlocalizedName extends CommandBase
 		{
 			EntityPlayer player = (EntityPlayer) icommandsender;
 			ItemStack inHand = player.inventory.getCurrentItem();
+			String output = "Your hands are empty!";
 			if (inHand != null)
 			{
-				icommandsender.sendChatToPlayer(new ChatMessageComponent().addText("The unlocalized name of the item \"" + inHand.getItem().getItemStackDisplayName(inHand) + "\" is: " + inHand.getItem().getUnlocalizedName(inHand)));
-			} else
-			{
-				icommandsender.sendChatToPlayer(new ChatMessageComponent().addText("Your hands are empty!"));
+				output = "The unlocalized name of the item \"" + EnumChatFormatting.BOLD + inHand.getItem().getItemStackDisplayName(inHand) + EnumChatFormatting.RESET + "\" is: " + EnumChatFormatting.BOLD + inHand.getItem().getUnlocalizedName(inHand) + EnumChatFormatting.RESET + "\"";
 			}
+			icommandsender.sendChatToPlayer(new ChatMessageComponent().addText(output));
 		}
 	}
 
