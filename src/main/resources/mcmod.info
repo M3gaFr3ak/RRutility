@@ -1,0 +1,11 @@
+{
+  "modinfoversion": 2,
+  "modlist": [{
+    "modid": "rrutil",
+    "name": "RRUtility",
+    "description": "Utility mod for the ResonantRise modpack!",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "authors": [ "M3gaFr3ak" ]
+  }]
+}
