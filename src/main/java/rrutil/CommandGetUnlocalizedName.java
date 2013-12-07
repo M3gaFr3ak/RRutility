@@ -39,7 +39,7 @@ public class CommandGetUnlocalizedName extends CommandBase
 			String output = "Your hands are empty!";
 			if (inHand != null)
 			{
-				output = "The unlocalized name of the item \"" + EnumChatFormatting.BOLD + inHand.getItem().getItemStackDisplayName(inHand) + EnumChatFormatting.RESET + "\" is: " + EnumChatFormatting.BOLD + inHand.getItem().getUnlocalizedName(inHand) + EnumChatFormatting.RESET + "\"";
+				output = "The unlocalized name of the item \"" + EnumChatFormatting.BOLD + inHand.getItem().getItemStackDisplayName(inHand) + EnumChatFormatting.RESET + "\" is: \"" + EnumChatFormatting.BOLD + inHand.getItem().getUnlocalizedName(inHand) + EnumChatFormatting.RESET + "\"";
 			}
 			icommandsender.sendChatToPlayer(new ChatMessageComponent().addText(output));
 		}
