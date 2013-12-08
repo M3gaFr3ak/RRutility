@@ -4,26 +4,31 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.Configuration;
+import rrutil.command.CommandGetUnlocalizedName;
+import rrutil.command.CommandSetIventoryLookup;
+import rrutil.item.ItemInventoryLookup;
+import rrutil.proxy.CommonProxy;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 
 @Mod(modid = "rrutil", name = "Resonant Rise Utility")
 public class RRUtility
 {
 	@Instance("rrutil")
 	public static RRUtility instance;
-
 	public String unlCommandName = "ULN";
 	public List<String> unlCommandAliases = Arrays.asList(new String[]
 	{ "uln" });
@@ -31,6 +36,10 @@ public class RRUtility
 	private Boolean enableContainsUnlocalized = true;
 	private String[] removeIsUnlocalizedName = new String[0];
 	private String[] removeContainsUnlocalizedName = new String[0];
+	public static CreativeTabs ModTab = new CreativeTabs("RRutility");
+
+	@SidedProxy(clientSide = "rrutil.proxy.ClientProxy", serverSide = "rrutil.proxy.CommonProxy")
+	public static CommonProxy proxy;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
@@ -43,7 +52,10 @@ public class RRUtility
 		enableContainsUnlocalized = config.get("Recipe Removal Toggles", "enable_contains_unlocalized", enableContainsUnlocalized, "Enable the option to remove the Items from the \"contains_unlocalized\" list").getBoolean(enableContainsUnlocalized);
 		removeIsUnlocalizedName = config.get("Recipe Removal", "is_unlocalized", removeIsUnlocalizedName, "Recipes to be removed, if the unlocalized name is the entry").getStringList();
 		removeContainsUnlocalizedName = config.get("Recipe Removal", "contains_unlocalized", removeContainsUnlocalizedName, "Recipes to be removed, if the unlocalized name contains the entry").getStringList();
+		int id = config.get("Inventory", "inventorylookup", 7000).getInt();
 		config.save();
+		NetworkRegistry.instance().registerGuiHandler(this, proxy);
+		new ItemInventoryLookup(id);
 	}
 
 	@EventHandler
@@ -90,5 +102,6 @@ public class RRUtility
 		MinecraftServer server = MinecraftServer.getServer();
 		ServerCommandManager manager = (ServerCommandManager) server.getCommandManager();
 		manager.registerCommand(new CommandGetUnlocalizedName());
+		manager.registerCommand(new CommandSetIventoryLookup());
 	}
 }

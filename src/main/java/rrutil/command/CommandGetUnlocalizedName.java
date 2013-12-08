@@ -1,7 +1,8 @@
-package rrutil;
+package rrutil.command;
 
 import java.util.List;
 
+import rrutil.RRUtility;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
