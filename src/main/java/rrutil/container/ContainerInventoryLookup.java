@@ -9,12 +9,10 @@ import net.minecraft.item.ItemStack;
 public class ContainerInventoryLookup extends Container
 {
 	IInventory player;
-	IInventory admin;
 
-	public ContainerInventoryLookup(IInventory player, IInventory admin)
+	public ContainerInventoryLookup(IInventory player)
 	{
 		this.player = player;
-		this.admin = admin;
 
 		for (int i = 0; i < 3; i++)
 		{
@@ -27,19 +25,6 @@ public class ContainerInventoryLookup extends Container
 		for (int i = 0; i < 9; i++)
 		{
 			addSlotToContainer(new Slot(player, i, 8 + i * 18, 75));
-		}
-
-		for (int i = 0; i < 3; i++)
-		{
-			for (int j = 0; j < 9; j++)
-			{
-				addSlotToContainer(new Slot(admin, j + i * 9 + 9, 8 + j * 18, i * 18 + 17 + 92));
-			}
-		}
-
-		for (int i = 0; i < 9; i++)
-		{
-			addSlotToContainer(new Slot(admin, i, 8 + i * 18, 75 + 92));
 		}
 	}
 
