@@ -1,9 +1,9 @@
 package rrutil.command;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -26,6 +26,7 @@ public class CommandInventory extends CommandBase
 		return "Prints out the inventory of the victim. Usage: Commandname <username>";
 	}
 
+	@SuppressWarnings("rawtypes")
 	public List getCommandAliases()
 	{
 		return RRUtility.instance.invCommandAliases;
@@ -57,5 +58,15 @@ public class CommandInventory extends CommandBase
 	public int getRequiredPermissionLevel()
 	{
 		return 0;
+	}
+
+	public int compareTo(ICommand par1ICommand)
+	{
+		return this.getCommandName().compareTo(par1ICommand.getCommandName());
+	}
+
+	public int compareTo(Object par1Obj)
+	{
+		return this.compareTo((ICommand) par1Obj);
 	}
 }

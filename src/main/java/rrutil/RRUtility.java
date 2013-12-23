@@ -56,6 +56,7 @@ public class RRUtility
 	{
 	}
 
+	@SuppressWarnings("unchecked")
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{

@@ -4,6 +4,7 @@ import java.util.List;
 
 import rrutil.RRUtility;
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -25,6 +26,7 @@ public class CommandGetUnlocalizedName extends CommandBase
 		return "This command will tell you the unlocalized name of the item you are holding in your hand!";
 	}
 
+	@SuppressWarnings("rawtypes")
 	public List getCommandAliases()
 	{
 		return RRUtility.instance.unlCommandAliases;
@@ -49,5 +51,15 @@ public class CommandGetUnlocalizedName extends CommandBase
 	public int getRequiredPermissionLevel()
 	{
 		return 0;
+	}
+
+	public int compareTo(ICommand par1ICommand)
+	{
+		return this.getCommandName().compareTo(par1ICommand.getCommandName());
+	}
+
+	public int compareTo(Object par1Obj)
+	{
+		return this.compareTo((ICommand) par1Obj);
 	}
 }
